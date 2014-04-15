@@ -35,10 +35,15 @@ class Bulb < Shoes::Shape
     end
   end
   
+
   def bulb_colour
     "#999999"
   end  
 
+  def switched_off
+    switched_on = switched_on
+    draw left, top, "#999999"
+  end
 
 end
 
@@ -47,6 +52,7 @@ class GoBulb < Bulb
   def bulb_colour
     TL::Go
   end  
+
 
 end
 
@@ -74,11 +80,12 @@ Shoes.app :title => "My Amazing Traffic Light", :width => 150, :height => 250 do
   @middle = Bulb.new self, 50, 100, true
   @bottom = Bulb.new self, 50, 160, true
   
-  @top = GoBulb.new self, 50,40,true
+  @top = GoBulb.new self, 50,40,false
   @middle = WaitBulb.new self,50,100,true
   @bottom = StopBulb.new self,50,160,true
 
-  
+  @top.switched_off  
+  @middle.switched_off
 
   click do
     
