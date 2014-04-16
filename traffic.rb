@@ -5,10 +5,10 @@ class TrafficLight
 
   def each
     yield [true, false, false]
-    yield [true, true, false]
-    yield [false, false, true]
     yield [false, true, false]
+    yield [false, false, true]
   end
+
 end
 
 class Bulb < Shoes::Shape
@@ -39,11 +39,6 @@ class Bulb < Shoes::Shape
   def bulb_colour 
     "#999999"
   end  
-
-  #def switched_off
-   #switched_on = switched_on
-    #draw left, top, "#999999"
-  #end
 
 end
 
@@ -99,13 +94,49 @@ Shoes.app :title => "My Amazing Traffic Light", :width => 150, :height => 250 do
 
   #@top.switched_off  
   #@middle.switched_off
+  #counter = 0
 
   click do
-    
-    
+  
+
+  Thread.new do    
+  @traffic_light.each do |x|
+    debug x[0]
+    debug x[1]
+    debug x[2]
+     sleep(1)
+    @top = GoBulb.new self, 50,40,x[0]
+    @middle = WaitBulb.new self,50,100,x[1]
+    @bottom = StopBulb.new self,50,160,x[2]
 
 
   end
+end
+      
+
+  
+     
+
+
+      #if counter == 1
+      #@top = GoBulb.new self, 50,40,true
+      #@middle = WaitBulb.new self,50,100,false
+      #@bottom_off= StopBulb.new self,50,160,false
+      #elsif counter==2
+      #@top = GoBulb.new self, 50,40,false
+      #@middle = WaitBulb.new self,50,100,true
+      #@bottom_off= StopBulb.new self,50,160,false
+      #elsif counter ==3
+      #@top = GoBulb.new self, 50,40,false
+      #@middle = WaitBulb.new self,50,100,false
+      #@bottom_off= StopBulb.new self,50,160,true
+      #counter = 0
+      #end
+
+  end
+
+
+
 end
 
 
